@@ -90,22 +90,20 @@ void KEY_Up(void)
 //等待看门狗复位
 void Force_Reboot(void)
 {
-    while(1)
+    if(!PWRKEY_ON_PORT)
     {
-    }
-/*
-    SYS_PWR_EN_LAT = 0;
-    __delay_ms(10);
-    SYS_PWR_EN_LAT = 1;
-    
-    PWRKEY_LAT = 1;     //PWRKEY拉低
+       SYS_PWR_EN_LAT = 0;
+       __delay_ms(10);
+       SYS_PWR_EN_LAT = 1;
 
-    __delay_ms(1000);   //延时2s左右
-    CLRWDT();
-    __delay_ms(1000);
-    
-    PWRKEY_LAT = 0;
- */
+       PWRKEY_LAT = 1;     //PWRKEY拉低
+
+       __delay_ms(1000);   //延时2s左右
+       CLRWDT();
+       __delay_ms(1000);
+
+       PWRKEY_LAT = 0;   
+    }
 }
 
 void ACC_MAP(void)

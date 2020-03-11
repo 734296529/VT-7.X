@@ -14,7 +14,7 @@
 extern "C" {
 #endif 
 #define uint unsigned int    
-#define MAX_SOFT_TIMER_COUNT    6
+#define MAX_SOFT_TIMER_COUNT    7
 struct timers_t{
 	bool isStart;
     bool isLoop;

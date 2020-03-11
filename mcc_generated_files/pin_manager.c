@@ -281,10 +281,17 @@ void IOCAF2_DefaultInterruptHandler(void){
         SYS_PWR_EN_LAT = 1;
         MCU_PWR_ON_LAT = 1;
         TIMERS_Start(1); //2s检测开机
-        TIMERS_Start(3); //4s屏蔽按键
+        //if(GPIO_31_PORT)
+        if(!USB1_ID_PORT && GPIO_31_PORT){
+            TIMERS_Start(5);//0.5s屏蔽按键
+        }
+        else{
+           TIMERS_Start(3); //4s屏蔽按键
+        }
         TIMERS_Start(4); //8s复位重启
     }
     else {
+        TIMERS_Stop(3);
         TIMERS_Stop(4);
     }
 
@@ -428,13 +435,13 @@ void IOCBF0_DefaultInterruptHandler(void){
     // or set custom function using IOCBF0_SetInterruptHandler()
     
     //GPIO_31电平变化中断处理 
-    if(GPIO_31_PORT == 0){
+    if(!GPIO_31_PORT){
         /* 检测到GPIO_31低电平
          * 开启软定时器0，延迟200ms后再根据电平高低判断是关机还是重启
          */
         TIMERS_Start(0);
     }
-    if(GPIO_31_PORT == 1){
+    if(GPIO_31_PORT){
         /* 检测到GPIO_31高电平
          * 开启软定时器2，30s后模拟USB拔插
          */

@@ -40,12 +40,13 @@ void main(void)
     INTERRUPT_PeripheralInterruptEnable();  //外围中断使能  
     
     TMR2_StartTimer();              //开启硬件定时器2
-    TIMERS_Add(0,300,0,SYS_DownDet);   //添加软件定时器0，模块断电延时检测
-    TIMERS_Add(1,2000,0,SYS_DownDet);  //添加软件定时器1，模块断电延时检测
+    TIMERS_Add(0,400,0,SYS_DownDet);   //添加软件定时器0，模块断电延时检测
+    TIMERS_Add(1,2500,0,SYS_DownDet);  //添加软件定时器1，模块断电延时检测
     TIMERS_Add(2,30000,0,USB_Redo);    //添加软件定时器2，开机模拟拔插USB
     TIMERS_Start(2);
     TIMERS_Add(3,4000,0,KEY_Up);
-    TIMERS_Add(4,9000,0,Force_Reboot);
+    TIMERS_Add(4,20000,0,Force_Reboot);
+    TIMERS_Add(5,500,0,KEY_Up);
     while (1)
     {
         USB_Switch();
